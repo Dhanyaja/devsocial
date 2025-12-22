@@ -15,10 +15,10 @@ const protect = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById(decode.id).select("-password");
+    req.user = await User.findById(decoded.id).select("-password");
     next();
   } catch (error) {
-    res.startus(500).json({ message: "Token invalid" });
+    res.status(500).json({ message: "Token invalid" });
   }
 };
 

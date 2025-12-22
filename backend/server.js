@@ -26,5 +26,9 @@ process.on("SIGINT", async () => {
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+})
+
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
