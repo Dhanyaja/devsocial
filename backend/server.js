@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { connectDB, disconnectDB } from "./src/config/db.js";
 import authRouter from "./src/routes/auth.routes.js";
 import userRouter from "./src/routes/user.routes.js";
+import postRouter from "./src/routes/posts.routes.js";
 
 dotenv.config();
 const app = express();
@@ -28,7 +29,8 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("API is running...");
-})
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
