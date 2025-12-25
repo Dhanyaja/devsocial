@@ -1,11 +1,11 @@
 import React from 'react'
 
-const page = () => {
+const Login = () => {
   return (
     <div>
-Hello nextjs
+      
     </div>
   )
 }
 
-export default page
+export default Login
