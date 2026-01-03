@@ -4,6 +4,7 @@ import {
   acceptFriendRequest,
   getMyProfile,
   getUserById,
+  markNotificationsRead,
   rejectFriendRequest,
   removeFriend,
   sendFriendRequest,
@@ -17,5 +18,6 @@ userRouter.post("/:id/request", protect, sendFriendRequest);
 userRouter.post("/:id/accept", protect, acceptFriendRequest);
 userRouter.post("/:id/reject", protect, rejectFriendRequest);
 userRouter.post("/:id/remove", protect, removeFriend);
+userRouter.post("/notifications/read", protect, markNotificationsRead);
 
 export default userRouter;

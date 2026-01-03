@@ -3,13 +3,32 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Feed from './pages/Feed'
+import ProtectedRoute from './routes/ProtectedRoute'
+import Profile from './pages/Profile'
 
 const App = () => {
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      <Route path='/feed' element={<Feed />} />
+
+      <Route
+        path='/feed'
+        element={
+          <ProtectedRoute>
+            <Feed />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path='/profile/:id'
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Default redirect */}
       <Route path='*' element={<Navigate to="/login" />} />

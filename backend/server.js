@@ -4,10 +4,12 @@ import { connectDB, disconnectDB } from "./src/config/db.js";
 import authRouter from "./src/routes/auth.routes.js";
 import userRouter from "./src/routes/user.routes.js";
 import postRouter from "./src/routes/posts.routes.js";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
+app.use(cors());
 
 async function start() {
   await connectDB(process.env.MONGO_URI);

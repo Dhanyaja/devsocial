@@ -8,7 +8,13 @@ import User from "../models/User.js";
 
 export const getMyProfile = async (req, res) => {
   try {
-    res.status(200).json(req.user);
+    const user = await User.findById(req.user._id)
+      .select("-password")
+      .populate("friendRequests", "name email")
+      .populate("friends", "name email")
+      .populate("sentRequests", "name email"); // ✅ ADD THIS
+
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -22,15 +28,17 @@ export const getMyProfile = async (req, res) => {
  */
 
 export const getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id).select("-password");
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Invalid user ID" });
+  const user = await User.findById(req.params.id)
+    .select("-password")
+    .populate("friends", "name email")
+    .populate("friendRequests", "name email")
+    .populate("sentRequests", "name email"); // ✅ ADD THIS
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
   }
+
+  res.json(user);
 };
 
 export const sendFriendRequest = async (req, res) => {
@@ -171,4 +179,10 @@ export const removeFriend = async (req, res) => {
   }
 };
 
-
+// controllers/user.controller.js
+export const markNotificationsRead = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  user.notifications.forEach((n) => (n.read = true));
+  await user.save();
+  res.json({ success: true });
+};
